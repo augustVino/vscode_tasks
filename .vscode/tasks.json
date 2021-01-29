@@ -1,0 +1,66 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "publish a",
+      "command": "./updateVersion.js",
+      "args": [
+        "path=${workspaceRoot}/project1",
+        "type=${input:publishType}",
+        "increment=${input:incrementType}"
+      ]
+      //   "cd ${workspaceRoot}/cnpm-im-bconfig-pc && npm run beta"
+    },
+    {
+      "type": "shell",
+      "label": "publish b",
+      "command": "./updateVersion.js",
+      "args": [
+        "path=${workspaceRoot}/project2",
+        "type=${input:publishType}",
+        "increment=${input:incrementType}"
+      ]
+    },
+    {
+      "type": "shell",
+      "label": "publish c",
+      "command": "./updateVersion.js",
+      "args": [
+        "path=${workspaceRoot}/project3",
+        "type=${input:publishType}",
+        "increment=${input:incrementType}"
+      ]
+    },
+    {
+      "label": "publish all",
+      "group": "build",
+      "dependsOn": ["publish a", "publish b", "publish c"],
+      "dependsOrder": "sequence",
+      "presentation": {
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "publishType",
+      "type": "pickString",
+      "description": "What type of publish do you want to create?",
+      "options": ["beta", "release"],
+      "default": "beta"
+    },
+    {
+      "id": "incrementType",
+      "type": "pickString",
+      "description": "What type of version-increment do you want to create?",
+      "options": ["patch", "minor", "major"],
+      "default": "patch"
+    }
+  ]
+}
